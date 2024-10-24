@@ -8,12 +8,15 @@ import Navbar from '@/components/Navbar';
 import { useForm } from 'react-hook-form';
 import { SimpleCatalog, updateAddons } from '@/utils/catalog';
 import UploadBackup from '@/components/UploadBackup';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 const stremioAPIBase = "https://api.strem.io/api/";
 
 type PageSetup = "hide" | "restore";
 
 export default function Home() {
+  const { width, height } = useWindowSize()
   const [stremioAuthKey, setStremioAuthKey] = useState('');
   const [addons, setAddons] = useState([]);
   const [updatedAddons, setUpdatedAddons] = useState<any[]>([]);
@@ -182,6 +185,10 @@ export default function Home() {
       });
   };
 
+  if (syncStatus) {
+    console.log('Sync status is true, rendering confetti...');
+  }
+
   const currentTitle = pageMode === "hide" ? "A Utility to Hide Cinemeta Catalogs in Stremio" : "A Utility to Restore Stremio Add-ons via Backup File"
 
   const currentDescription = pageMode === "hide" ? `A wise man once said, "Cinemeta catalogs are ugly"... and he was absolutely right.` : `A wise man once said "Backups are a good idea"... and he was RIGHT`
@@ -320,7 +327,16 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                <div>Congrats! Changes are made!</div>
+                <>
+                  {syncStatus && (
+                    <Confetti
+                      style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999 }}
+                      width={width}
+                      height={height}
+                    />
+                  )}
+                  <div>Congrats! Changes are made successfully!</div>
+                </>
               )}
             </div>
           )}

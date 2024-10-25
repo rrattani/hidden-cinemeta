@@ -260,7 +260,8 @@ export default function Home() {
               <div className="p-4">
                 <form className="flex flex-col items-center space-y-4" onSubmit={handleSubmit(onHideFormSubmit)}>
                   <div className="overflow-x-auto">
-                    <table className="table table-zebra">
+
+                    <table className="table-xs sm:table-sm md:table-md lg:table-lg table table-zebra">
                       {/* head */}
                       <thead>
                         <tr>
@@ -284,6 +285,7 @@ export default function Home() {
                         ))}
                       </tbody>
                     </table>
+
                   </div>
                   <button type="submit" className="btn btn-primary">Apply Changes</button>
                 </form>

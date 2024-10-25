@@ -11,9 +11,7 @@ const CopyClipboard: React.FC<CopyClipboardProps> = ({ children }) => {
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-wrap p-2 rounded-lg space-x-2 justify-center">
-        <div className="truncate">
-          <Code>{children}</Code>
-        </div>
+        <Code>{children}</Code>
         <CopyToClipboard onCopy={() => {
           toast.success("Copied to Clipboard!")
         }} text={children?.toString()}>

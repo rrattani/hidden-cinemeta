@@ -36,15 +36,22 @@ const Info = () => {
         <div className="collapse-content space-y-4">
           <p>This is more a work-around than an official solution so your mileage may vary. In my own testing it appears to work without issue.</p>
           <p>
-            Check-out the source code here: {" "}
-            <a target="_blank" href="https://github.com/Skarian/hidden-cinemeta" className="link" rel="noopener noreferrer">
-              Github Repository
+            If you have any issues try to leave a comment in the Reddit announcement post in the /r/StremioAddons page {" "}
+            <a target="_blank" href="https://www.reddit.com/r/StremioAddons/comments/1gb9s4f/hidden_cinemeta_a_utility_to_hide_cinemeta/" className="link" rel="noopener noreferrer">
+              Reddit Post
             </a>
           </p>
+        </div>
+      </div>
+      {/* Is it open-source */}
+      <div className="collapse collapse-plus bg-gray-800">
+        <input type="radio" name="my-accordion-3" />
+        <div className="collapse-title font-bold">Is this utility open-source?</div>
+        <div className="collapse-content space-y-4">
           <p>
-            If you have any issues try to leave a comment in the Reddit announcement post in the /r/StremioAddons page {" "}
-            <a target="_blank" href="" className="link" rel="noopener noreferrer">
-              Reddit Post
+            Yes, under MIT License. Check-out the source code here: {" "}
+            <a target="_blank" href="https://github.com/Skarian/hidden-cinemeta" className="link" rel="noopener noreferrer">
+              Github Repository
             </a>
           </p>
         </div>

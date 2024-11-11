@@ -337,7 +337,7 @@ export default function Home() {
                       height={height}
                     />
                   )}
-                  <div>Congrats! Changes are made successfully!</div>
+                  <div>Congrats! Changes are made successfully! Reload your Stremio application to see them</div>
                 </>
               )}
             </div>

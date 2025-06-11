@@ -1,37 +1,29 @@
-# Stage 1: Builder (with TypeScript)
+# Stage 1: Builder
 FROM node:18-alpine AS builder
 
+# Create all directories first
 WORKDIR /app
+RUN mkdir -p /app/public
 
-# Copy dependency files
+# Copy files
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY next.config.ts ./  # TypeScript config file
+COPY next.config.ts ./
 COPY public ./public
 
-# Install dependencies (including TypeScript)
+# Install and build
 RUN npm ci
-
-# Copy source files
 COPY . .
-
-# Build Next.js (compiles TS files and next.config.ts)
 RUN npm run build
 
-# ----------------------------------
-# Stage 2: Production
-# ----------------------------------
-FROM node:18-alpine AS runner
+# Stage 2: Runtime
+FROM node:18-alpine
 WORKDIR /app
-
-# Copy production artifacts
+RUN mkdir -p /app/public
 COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/next.config.js ./  # Compiled config
-COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 
-# Runtime settings
-ENV NODE_ENV=production
 EXPOSE 3000
 CMD ["npm", "start"]

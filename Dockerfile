@@ -4,21 +4,26 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 RUN mkdir -p /app/public
 
-# Copy dependency files
+# First install TypeScript and ESLint (required by Next.js)
 COPY package.json package-lock.json* ./
-COPY tsconfig.json ./
-COPY next.config.ts ./
+RUN npm install --save-exact --save-dev typescript @types/react @types/node eslint
 
-# Install with legacy peer deps
+# Then install all dependencies with legacy peer deps
 RUN npm ci --omit=dev --legacy-peer-deps
 
-# Copy everything else and build
+# Copy config files
+COPY tsconfig.json ./
+COPY next.config.ts ./
+COPY public ./public
+
+# Copy source and build
 COPY . .
 RUN npm run build
 
 # Stage 2: Runtime
 FROM node:18-alpine
 WORKDIR /app
+
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public

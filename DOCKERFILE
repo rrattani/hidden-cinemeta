@@ -1,0 +1,20 @@
+# Use official Node.js image with Alpine (smaller size)
+FROM node:18-alpine
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy app source
+COPY . .
+
+# Expose the app port (3000 based on your server.js)
+EXPOSE 3000
+
+# Run the application
+CMD ["node", "server.js"]

@@ -5,21 +5,23 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 RUN mkdir -p /app/public
 
-# Copy files
-COPY package*.json ./
+# Copy ONLY dependency-related files first (for better caching)
+COPY package.json package-lock.json* ./
 COPY tsconfig.json ./
 COPY next.config.ts ./
-COPY public ./public
 
-# Install and build
-RUN npm ci
+# Install dependencies (use --omit=dev for production)
+RUN npm ci --omit=dev
+
+# Copy everything else and build
 COPY . .
 RUN npm run build
 
 # Stage 2: Runtime
 FROM node:18-alpine
 WORKDIR /app
-RUN mkdir -p /app/public
+
+# Copy production artifacts
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public

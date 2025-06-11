@@ -1,0 +1,32 @@
+# Node.js and build artifacts
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+
+# Git and IDE files
+.git/
+.gitignore
+.idea/
+.vscode/
+*.swp
+
+# Environment files (except .env.production)
+.env*
+!.env.production  # Keep only production env file if needed
+
+# Docker and CI files
+Dockerfile
+.dockerignore
+.github/
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+
+# Optional: Exclude tests and docs
+test/
+tests/
+coverage/
+docs/
